@@ -62,8 +62,13 @@ user_input = st.text_area('Moview Review')
 if st.button('Predict'):
   preprocessed_input = preprocess_text(user_input)
   ## make prediction
-  sentiment, confidence, prediction = predict_review(preprocessed_input)
+  prediction = model.predict(preprocessed_input)
+  sentiment = 'Positive' if prediction[0][0] > 0.5 else 'Negative'
 
+  ## display the results
   st.write(f'Sentiment: {sentiment}')
-  st.write(f'Confidence: {confidence:.2f}')
-  st.write(f'Prediction: {prediction:.2f}')
+  st.write(f'Confidence: {prediction[0][0]:.2f}')
+else:
+   st.write('Please enter movie review')
+
+
